@@ -1,4 +1,5 @@
 import math
+import matplotlib.pyplot as plt
 from probablity import Probablity
 # Binomial probablity class
 
@@ -25,9 +26,24 @@ class Binomial(Probablity):
         for k in range(n+1):
             print(k, ':', self.probablityofsuccess(n, k))
 
+    def graph(self, n):
+        plt.figure(num='Bernouli Distribution')
+        plt.xlabel('Number of sucessful results')
+        plt.ylabel('probability of success')
+        probs = []
+        ks = []
+        for k in range(n+1):
+            #plt.plot(k, self.probablityofsuccess(n, k))
+            probs.append(self.probablityofsuccess(n, k))
+            ks.append(k)
+            print(k, ':', self.probablityofsuccess(n, k))
 
-flipCoin = Binomial(0.5)
+        plt.plot(ks, probs)
+        plt.show()
+
+
+flipCoin = Binomial(0.3)
 # print(flipCoin.probablityofsuccess(5,2))
-size = 10
-#print("Probablity of getting k heads after", size, "coin flips")
-# flipCoin.printTable(size)
+size = 20
+print("Probablity of getting k heads after", size, "coin flips")
+flipCoin.graph(size)
