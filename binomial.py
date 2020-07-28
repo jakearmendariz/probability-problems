@@ -2,7 +2,8 @@ import math
 import matplotlib.pyplot as plt
 from probablity import Probablity
 # Binomial probablity class
-
+import random
+import numpy as np
 
 class Binomial(Probablity):
     def __init__(self, prob):
@@ -28,12 +29,13 @@ class Binomial(Probablity):
 
     def graph(self, n):
         plt.figure(num='Bernouli Distribution')
-        plt.xlabel('Number of sucessful results')
+        plt.xlabel('Number of heads')
         plt.ylabel('probability of success')
         probs = []
         ks = []
+        sum = 0
         for k in range(n+1):
-            #plt.plot(k, self.probablityofsuccess(n, k))
+            sum += self.probablityofsuccess(n, k)
             probs.append(self.probablityofsuccess(n, k))
             ks.append(k)
             print(k, ':', self.probablityofsuccess(n, k))
@@ -41,9 +43,25 @@ class Binomial(Probablity):
         plt.plot(ks, probs)
         plt.show()
 
+    def runAndGraph(self, n):
+        x_axis = np.arange(n+1)
+        result = np.zeros(n+1)
+        plt.figure(num='Flipping a coin 10 times, for 10,000 trials')
+        plt.xlabel('Number of heads')
+        plt.ylabel('Number of heads after ten flips')
+        for i in range(10000):
+            sum = 0
+            for j in range(n):
+                sum += random.randint(0,1)
+            result[sum] += 1
+        print(result)
+        plt.plot(x_axis, result)
+        plt.show()
 
-flipCoin = Binomial(0.3)
+flipCoin = Binomial(0.5)
+flipCoin.runAndGraph(10)
+flipCoin.graph(10)
 # print(flipCoin.probablityofsuccess(5,2))
-size = 20
-print("Probablity of getting k heads after", size, "coin flips")
-flipCoin.graph(size)
+#size = 3
+#print("Probablity of getting k heads after", size, "coin flips")
+# flipCoin.graph(size)
